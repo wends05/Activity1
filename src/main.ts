@@ -1,24 +1,25 @@
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import submit from './submit.ts'
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
+  <h3>Add a todo here</h3>
+  <div class="form-container">
+    <form action="/">
+    <input id="todo" />
+      <button id="submit" type="submit">
+        Submit
+      </button>
+    </form>
+  <div id="todos" class="todos">
   </div>
+  </div>
+
 `
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+document.getElementById("submit")!.addEventListener("click", () => {
+  submit()
+})
+document.querySelector("form")?.addEventListener("submit", (e) => {
+  e.preventDefault()
+})
