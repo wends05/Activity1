@@ -55,9 +55,15 @@ button.trash {
   background-color: #535bf2;
 }
 
-.form-container, .todos {
+.form-container {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+}
+
+.todos {
+  display: flex;
+  flex-direction: column-reverse;
   gap: 0.5rem;
 }
 

@@ -1,7 +1,11 @@
 import './style.css'
-import Todo from './Todo.ts'
 
 
+type Todo = {
+  id: number,
+  name: string;
+  isComplete: boolean;
+}
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
   <div>
@@ -17,8 +21,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
   </div>
   <ul id="todos" class="todos" />
 `
-
-
 
 const submitItem = (todo: Todo) => {
 
@@ -44,18 +46,14 @@ const submitItem = (todo: Todo) => {
   todoElement.append(checkBox, label, button)
 
   const todosElement = document.getElementById("todos")
-  console.log(checkBox.outerHTML)
   todosElement?.appendChild(todoElement)
 
   checkBox.addEventListener("change", () => {
-    console.log("ting")
     todo.isComplete = checkBox.checked
-    console.log(todos)
     saveTodos()
   })
 
   button.addEventListener("click", () => {
-    console.log("pressed Button")
     todos = todos.filter(t => t.id != todo.id)
     todosElement?.removeChild(todoElement)
     saveTodos()
@@ -76,21 +74,17 @@ todos.forEach(todo => {
   submitItem(todo)}
 )
 
-
-
 document.querySelector("form")?.addEventListener("submit", (e) => {
   e.preventDefault()
   const todoInputElement = document.querySelector<HTMLFormElement>("#todo")!
   const todoText = todoInputElement.value
 
-  console.log(todoText)
-
   if (!todoText) alert("Wrong")
 
   const todo: Todo = {
-    id: todos.length + 1,
+    id: new Date().getTime(),
     name: todoText,
-    isComplete: false
+    isComplete: false,
   }
 
   todos.push(todo)
