@@ -95,5 +95,3 @@ document.querySelector("form")?.addEventListener("submit", (e) => {
   submitItem(todo)
   todoInputElement.value = ""
 })
-
-
