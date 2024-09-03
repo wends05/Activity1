@@ -38,10 +38,9 @@ const submitItem = (todo: Todo) => {
   trashButton.appendChild(trashImg);
 
   checkBox.type = 'checkbox';
-  label.setAttribute("name", idString);
   checkBox.id = idString;
   checkBox.checked = todo.isComplete;
-
+  
   label.setAttribute("class", "todo-label");
   label.setAttribute("for", idString);
   label.innerHTML = todo.name;
