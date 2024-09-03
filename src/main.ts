@@ -28,14 +28,14 @@ const submitItem = (todo: Todo) => {
 
   const checkBox = document.createElement('input');
   const label = document.createElement('label');
-  const button = document.createElement("button");
-  const trash = document.createElement("img");
+  const trashButton = document.createElement("button");
+  const trashImg = document.createElement("img");
 
-  trash.src = '/trash-can-svgrepo-com.svg';
-  trash.width = 25;
+  trashImg.src = '/trash-can-svgrepo-com.svg';
+  trashImg.width = 25;
 
-  button.setAttribute("class", "trash");
- button.appendChild(trash);
+  trashButton.setAttribute("class", "trash");
+  trashButton.appendChild(trashImg);
 
   checkBox.type = 'checkbox';
   label.setAttribute("name", idString);
@@ -46,7 +46,7 @@ const submitItem = (todo: Todo) => {
   label.setAttribute("for", idString);
   label.innerHTML = todo.name;
   todoElement.setAttribute("class", "todo");
-  todoElement.append(checkBox, label, button);
+  todoElement.append(checkBox, label, trashButton);
 
   const todosElement = document.getElementById("todos");
   todosElement?.appendChild(todoElement);
@@ -56,7 +56,7 @@ const submitItem = (todo: Todo) => {
     saveTodos();
   })
 
-  button.addEventListener("click", () => {
+  trashButton.addEventListener("click", () => {
     todos = todos.filter(t => t.id != todo.id);
     todosElement?.removeChild(todoElement);
     saveTodos();
