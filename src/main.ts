@@ -23,62 +23,62 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
 
 const submitItem = (todo: Todo) => {
 
-  const idString = todo.id.toString()
+  const idString = todo.id.toString();
+  const todoElement = document.createElement('li');
 
-  const todoElement = document.createElement('li')
-  const checkBox = document.createElement('input')
-  const label = document.createElement('label')
-  const button = document.createElement("button")
-  const trash = document.createElement("img")
+  const checkBox = document.createElement('input');
+  const label = document.createElement('label');
+  const button = document.createElement("button");
+  const trash = document.createElement("img");
 
-  trash.src = '/trash-can-svgrepo-com.svg'
-  trash.width = 25
+  trash.src = '/trash-can-svgrepo-com.svg';
+  trash.width = 25;
 
-  button.setAttribute("class", "trash")
-  button.appendChild(trash)
+  button.setAttribute("class", "trash");
+ button.appendChild(trash);
 
-  checkBox.type = 'checkbox'
-  label.setAttribute("name", idString)
-  checkBox.id = idString
-  checkBox.checked = todo.isComplete
+  checkBox.type = 'checkbox';
+  label.setAttribute("name", idString);
+  checkBox.id = idString;
+  checkBox.checked = todo.isComplete;
 
-  label.setAttribute("class", "todo-label")
-  label.setAttribute("for", idString)
-  label.innerHTML = todo.name
-  todoElement.setAttribute("class", "todo")
-  todoElement.append(checkBox, label, button)
+  label.setAttribute("class", "todo-label");
+  label.setAttribute("for", idString);
+  label.innerHTML = todo.name;
+  todoElement.setAttribute("class", "todo");
+  todoElement.append(checkBox, label, button);
 
-  const todosElement = document.getElementById("todos")
-  todosElement?.appendChild(todoElement)
+  const todosElement = document.getElementById("todos");
+  todosElement?.appendChild(todoElement);
 
   checkBox.addEventListener("change", () => {
-    todo.isComplete = checkBox.checked
-    saveTodos()
+    todo.isComplete = checkBox.checked;
+    saveTodos();
   })
 
   button.addEventListener("click", () => {
-    todos = todos.filter(t => t.id != todo.id)
-    todosElement?.removeChild(todoElement)
-    saveTodos()
+    todos = todos.filter(t => t.id != todo.id);
+    todosElement?.removeChild(todoElement);
+    saveTodos();
   })
 }
 
 const saveTodos = () => {
-  localStorage.setItem("TODOS", JSON.stringify(todos))
+  localStorage.setItem("TODOS", JSON.stringify(todos));
 }
 
 
-let todos : Todo[] = []
+let todos: Todo[] = [];
 
-todos = JSON.parse(localStorage.getItem("TODOS") || '[]')
+todos = JSON.parse(localStorage.getItem("TODOS") || '[]');
 todos.forEach(todo => {
-  submitItem(todo)}
-)
+  submitItem(todo);
+})
 
 document.querySelector("form")?.addEventListener("submit", (e) => {
-  e.preventDefault()
-  const todoInputElement = document.querySelector<HTMLFormElement>("#todo")!
-  const todoText : string = todoInputElement.value.trim()
+  e.preventDefault();
+  const todoInputElement = document.querySelector<HTMLFormElement>("#todo")!;
+  const todoText: string = todoInputElement.value.trim();
 
   if (!todoText) {
     alert("Please input something");
@@ -91,9 +91,9 @@ document.querySelector("form")?.addEventListener("submit", (e) => {
     isComplete: false,
   }
 
-  todos.push(todo)
-  saveTodos()
+  todos.push(todo);
+  saveTodos();
 
-  submitItem(todo)
-  todoInputElement.value = ""
+  submitItem(todo);
+  todoInputElement.value = "";
 })
