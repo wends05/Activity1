@@ -98,12 +98,3 @@ document.querySelector("form")?.addEventListener("submit", (e) => {
   submitItem(todo)
   todoInputElement.value = ""
 })
-/* 
-
-1. list
-2. input
-3. save sa list
-
-
-
-*/
