@@ -1,6 +1,5 @@
 import './style.css'
 
-
 type Todo = {
   id: number,
   name: string;
