@@ -78,10 +78,10 @@ todos.forEach(todo => {
 document.querySelector("form")?.addEventListener("submit", (e) => {
   e.preventDefault()
   const todoInputElement = document.querySelector<HTMLFormElement>("#todo")!
-  const todoText = todoInputElement.value
+  const todoText : string = todoInputElement.value.trim()
 
   if (!todoText) {
-    alert("Wrong");
+    alert("Please input something");
     return;
   }
 
