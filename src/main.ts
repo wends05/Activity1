@@ -62,18 +62,16 @@ const submitItem = (todo: Todo) => {
     todosElement?.removeChild(todoElement)
     saveTodos()
   })
-  saveTodos()
 }
 
 const saveTodos = () => {
-  window.localStorage.setItem("TODOS", JSON.stringify(todos))
+  localStorage.setItem("TODOS", JSON.stringify(todos))
 }
 
 
 let todos : Todo[] = []
 
-todos = JSON.parse(localStorage.getItem("TODOS") || '[]') 
-console.log(todos)
+todos = JSON.parse(localStorage.getItem("TODOS") || '[]')
 todos.forEach(todo => {
   submitItem(todo)}
 )
@@ -95,6 +93,17 @@ document.querySelector("form")?.addEventListener("submit", (e) => {
   }
 
   todos.push(todo)
+  saveTodos()
+
   submitItem(todo)
   todoInputElement.value = ""
 })
+/* 
+
+1. list
+2. input
+3. save sa list
+
+
+
+*/
