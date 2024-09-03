@@ -83,7 +83,10 @@ document.querySelector("form")?.addEventListener("submit", (e) => {
   const todoInputElement = document.querySelector<HTMLFormElement>("#todo")!
   const todoText = todoInputElement.value
 
-  if (!todoText) alert("Wrong")
+  if (!todoText) {
+    alert("Wrong");
+    return;
+  }
 
   const todo: Todo = {
     id: new Date().getTime(),
