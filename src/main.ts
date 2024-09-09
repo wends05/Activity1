@@ -12,6 +12,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
     <div class="form-container">
       <form action="/">
         <input id="todo" />
+        <input id="deadline" type="datetime-local" />
         <button id="submit" type="submit">
           Submit
         </button>
@@ -21,32 +22,49 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
   <ul id="todos" class="todos" />
 `
 
-const submitItem = (todo: Todo) => {
 
+const renderTodos = () => {
+  const todosElement = document.getElementById("todos");
+  todosElement!.innerHTML = ''
+  sortedTodos = sortTodos(todos, config)
+  sortedTodos.forEach(todo => renderTodo(todo))
+}
+
+const renderTodo = (todo: Todo) => {
+
+  const parsedDate = new Date(todo.deadline)
   const idString = todo.id.toString();
   const todoElement = document.createElement('li');
 
   const checkBox = document.createElement('input');
-  const label = document.createElement('label');
-  const trashButton = document.createElement("button");
-  const trashImg = document.createElement("img");
-
-  trashImg.src = '/trash-can-svgrepo-com.svg';
-  trashImg.width = 25;
-
-  trashButton.setAttribute("class", "trash");
-  trashButton.appendChild(trashImg);
-
   checkBox.type = 'checkbox';
   checkBox.id = idString;
   checkBox.checked = todo.isComplete;
-  
-  label.setAttribute("class", "todo-label");
+
+  const label = document.createElement('label');
+  label.classList.add("todo-label")
   label.setAttribute("for", idString);
   label.innerHTML = todo.name;
-  todoElement.setAttribute("class", "todo");
-  todoElement.append(checkBox, label, trashButton);
 
+  const deadline = document.createElement('div');
+  deadline.innerText = parsedDate.toDateString()
+  deadline.classList.add("todo-deadline")
+
+  const trashButton = document.createElement("button");
+  const trashImg = document.createElement("img");
+  trashImg.src = '/trash-can-svgrepo-com.svg';
+  trashImg.width = 25;
+  trashButton.classList.add("trash")
+  trashButton.appendChild(trashImg);
+
+
+  todoElement.classList.add("todo")
+  todoElement.append(checkBox, label, deadline, trashButton);
+
+  if (parsedDate.getTime() < today.getTime() ) {
+    todoElement.classList.add("todo-overdue")
+  }
+  
   const todosElement = document.getElementById("todos");
   todosElement?.appendChild(todoElement);
 
@@ -84,10 +102,15 @@ document.querySelector("form")?.addEventListener("submit", (e) => {
     return;
   }
 
+  const deadlineElement = document.querySelector<HTMLInputElement>("#deadline")!;
+  const deadline = deadlineElement.value
+
+  console.log(deadline)
   const todo: Todo = {
     id: new Date().getTime(),
     name: todoText,
     isComplete: false,
+    deadline: new Date(deadline)
   }
 
   todos.push(todo);
