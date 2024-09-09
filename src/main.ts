@@ -1,4 +1,7 @@
 import { Config } from './Config';
+import { getConfig, getTodos, saveTodos } from './localStorage';
+import { sortTodos } from './sort';
+import './style.css'
 import Todo from "./Todo"
 
 export let todos: Todo[] = [];
@@ -15,9 +18,6 @@ let config: Config = {
 
 const today = new Date()
 
-  name: string;
-  isComplete: boolean;
-}
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
   <div>
@@ -30,6 +30,17 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
           Submit
         </button>
       </form>
+      <div class="sort-button-container">
+        <p>
+          Sorting:
+        </p>
+        <select id="sorting">
+          <option value="default">Default</option>  
+          <option value="name">Name</option>
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+        </select>
+      </div>
     </div>
   </div>
   <ul id="todos" class="todos" />
@@ -117,8 +128,20 @@ todoForm.addEventListener("submit", (e) => {
   }
 
   todos.push(todo);
+  console.log(todos)
   saveTodos();
-
-  submitItem(todo);
+  renderTodos()
   todoInputElement.value = "";
+})
+
+const sortButton = document.querySelector<HTMLSelectElement>("#sorting")
+
+sortButton?.addEventListener("change", () => {
+  console.log(sortButton.value)
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+  todos = getTodos()
+  renderTodos()
+  config = getConfig()
 })

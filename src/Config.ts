@@ -1,3 +1,3 @@
 export type Config = {
-  ascending: boolean
+  sorting: number
 }
