@@ -60,10 +60,22 @@ form {
   flex-direction: column;
   gap: 1rem;
 }
+
 .form-container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+@media (min-width: 658px) {
+  .form-container {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.sort-button {
+  height: max-content;
 }
 
 .todos {
@@ -83,7 +95,26 @@ form {
   padding: 0.5rem;
 }
 
+.todo-deadline {
+  width: 100%;
+  max-height: min-content;
+}
+
+.todo-overdue {
+  background-color: rgb(176, 56, 56);
+}
+
 .todo-label {
   width: 100%;
   text-align: start;
+}
+
+.sort-button-container {
+  padding: 0 2rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+select {
+  height: max-content;
 }
