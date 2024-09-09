@@ -1,7 +1,20 @@
-import './style.css'
+import { Config } from './Config';
+import Todo from "./Todo"
 
-type Todo = {
-  id: number,
+export let todos: Todo[] = [];
+export let sortedTodos: Todo[] = []
+
+enum Sorting {
+  default, name, newest, oldest
+}
+
+
+let config: Config = {
+  sorting: Sorting.default
+}
+
+const today = new Date()
+
   name: string;
   isComplete: boolean;
 }
@@ -80,19 +93,9 @@ const renderTodo = (todo: Todo) => {
   })
 }
 
-const saveTodos = () => {
-  localStorage.setItem("TODOS", JSON.stringify(todos));
-}
+const todoForm = document.querySelector("form")! as HTMLFormElement
 
-
-let todos: Todo[] = [];
-
-todos = JSON.parse(localStorage.getItem("TODOS") || '[]');
-todos.forEach(todo => {
-  submitItem(todo);
-})
-
-document.querySelector("form")?.addEventListener("submit", (e) => {
+todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const todoInputElement = document.querySelector<HTMLFormElement>("#todo")!;
   const todoText: string = todoInputElement.value.trim();
