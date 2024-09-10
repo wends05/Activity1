@@ -109,10 +109,15 @@ form {
   text-align: start;
 }
 
+.todo-complete {
+  background-color: #4c4c4c;
+}
+
+
 .sort-button-container {
   padding: 0 2rem;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 select {
