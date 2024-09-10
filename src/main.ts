@@ -57,6 +57,21 @@ const renderTodos = () => {
 const renderTodo = (todo: Todo) => {
 
   const parsedDate = new Date(todo.deadline)
+
+  const timeArray = parsedDate
+    .toLocaleTimeString()
+    .split(":")
+  const timeDisplayed = 
+    timeArray
+      .slice(0, 2)
+      .join(":")
+    + " " + 
+    timeArray
+      .slice(-1)
+      .toString()
+      .slice(3)
+  
+
   const idString = todo.id.toString();
   const todoElement = document.createElement('li');
 
@@ -71,7 +86,7 @@ const renderTodo = (todo: Todo) => {
   label.innerHTML = todo.name;
 
   const deadline = document.createElement('div');
-  deadline.innerText = parsedDate.toDateString()
+  deadline.innerText = parsedDate.toDateString() + " " + timeDisplayed
   deadline.classList.add("todo-deadline")
 
   const trashButton = document.createElement("button");
@@ -85,8 +100,12 @@ const renderTodo = (todo: Todo) => {
   todoElement.classList.add("todo")
   todoElement.append(checkBox, label, deadline, trashButton);
 
-  if (parsedDate.getTime() < today.getTime() ) {
+  if (parsedDate.getTime() < today.getTime() && !todo.isComplete) {
     todoElement.classList.add("todo-overdue")
+  }
+
+  if (todo.isComplete) {
+    todoElement.classList.add("todo-complete")
   }
   
   const todosElement = document.getElementById("todos");
@@ -95,6 +114,7 @@ const renderTodo = (todo: Todo) => {
   checkBox.addEventListener("change", () => {
     todo.isComplete = checkBox.checked;
     saveTodos();
+    renderTodos()
   })
 
   trashButton.addEventListener("click", () => {
