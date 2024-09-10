@@ -1,5 +1,5 @@
 import { Config } from './Config';
-import { getConfig, getTodos, saveTodos } from './localStorage';
+import { getConfig, getTodos, saveTodos, setConfig } from './localStorage';
 import { sortTodos } from './sort';
 import './style.css'
 import Todo from "./Todo"
@@ -7,13 +7,13 @@ import Todo from "./Todo"
 export let todos: Todo[] = [];
 export let sortedTodos: Todo[] = []
 
-enum Sorting {
-  default, name, newest, oldest
+export enum Sorting {
+  default, name, due
 }
 
-
 let config: Config = {
-  sorting: Sorting.default
+  sorting: Sorting.default,
+  reverse: false
 }
 
 const today = new Date()
@@ -37,9 +37,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
         <select id="sorting">
           <option value="default">Default</option>  
           <option value="name">Name</option>
-          <option value="newest">Newest First</option>
-          <option value="oldest">Oldest First</option>
+          <option value="due">Due Date</option>
         </select>
+        <div>
+          <input type="checkbox" id="reverse" />
+          <label for="reverse">Reverse</label>
+        </div>
       </div>
     </div>
   </div>
@@ -50,6 +53,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = /*html*/ `
 const renderTodos = () => {
   const todosElement = document.getElementById("todos");
   todosElement!.innerHTML = ''
+  console.log(config)
   sortedTodos = sortTodos(todos, config)
   sortedTodos.forEach(todo => renderTodo(todo))
 }
@@ -157,11 +161,28 @@ todoForm.addEventListener("submit", (e) => {
 const sortButton = document.querySelector<HTMLSelectElement>("#sorting")
 
 sortButton?.addEventListener("change", () => {
-  console.log(sortButton.value)
+  const value = sortButton.value
+  config.sorting = value in Sorting ?
+    Sorting[value as keyof typeof Sorting] : 0
+  renderTodos()
+  setConfig(config)
+})
+
+const reverseButton = document.querySelector<HTMLInputElement>("#reverse")
+
+reverseButton?.addEventListener("change", () => {
+  const value = reverseButton.checked
+  config.reverse = value
+  renderTodos()
+  setConfig(config)
+  console.log(config.reverse)
+  console.log(value)
 })
 
 document.addEventListener("DOMContentLoaded", () => {
   todos = getTodos()
-  renderTodos()
   config = getConfig()
+  renderTodos()
+  sortButton!.value = Sorting[config.sorting]
+  reverseButton!.checked = config.reverse
 })

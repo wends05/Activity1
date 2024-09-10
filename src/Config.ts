@@ -1,3 +1,4 @@
 export type Config = {
-  sorting: number
+  sorting: number,
+  reverse: boolean
 }
