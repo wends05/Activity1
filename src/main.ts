@@ -143,6 +143,11 @@ todoForm.addEventListener("submit", (e) => {
   const deadlineElement = document.querySelector<HTMLInputElement>("#deadline")!;
   const deadline = deadlineElement.value
 
+  if (!deadline) {
+    alert("Please input a date and time")
+    return;
+  }
+
   console.log(deadline)
   const todo: Todo = {
     id: new Date().getTime(),
@@ -156,6 +161,7 @@ todoForm.addEventListener("submit", (e) => {
   saveTodos();
   renderTodos()
   todoInputElement.value = "";
+  
 })
 
 const sortButton = document.querySelector<HTMLSelectElement>("#sorting")
